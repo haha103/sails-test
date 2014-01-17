@@ -21,8 +21,8 @@ module.exports = {
     phone      : { type : 'string', required  : true },
     address    : { type : 'string',  required : true },
     // fields with fks
-    loans  : { type : 'array', required : true },
-    domain : { type : 'array', required : true },
+    loans   : { type : 'array', required : true },
+    domains : { type : 'array', required : true },
 
     /* individual clients */
     education     : { type : 'string', required  : true },
