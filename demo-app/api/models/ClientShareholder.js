@@ -15,7 +15,8 @@ module.exports = {
     last_name  : { type : 'string' , required : true } ,
     share      : { type : 'float'  , required : true } ,
     // fk
-    form       : { type : 'integer' , required : true }
+    form    : { type : 'integer' , required : true },
+    company : { type : 'integer' , required : true } // id of Client model
 
   }
 

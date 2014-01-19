@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <!--STYLES-->
+    <link rel="stylesheet" href="/linker/styles/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="/linker/styles/bootstrap-select.css">
     <link rel="stylesheet" href="/linker/styles/bootstrap.css">
     <link rel="stylesheet" href="/linker/styles/custom.css">
     <!--STYLES END-->
@@ -29,7 +31,9 @@
             <span class="icon-bar"></span>
           </button>
           <div class='haha-logo-container'>
-            <img src='/images/logo.png' />
+            <a href="/">
+              <img src='/images/logo.png' />
+            </a>
           </div>
         </div>
         <div class="navbar-collapse collapse haha-nav-container">
@@ -40,11 +44,21 @@
                 <%= session.User.name %>
               </a>
             </li>
-              <% if (session.User.admin) { %>
-              <li><a href="/user">User Administration</a></li>
-              <li><a href="#">Placeholder2</a></li>
-              <% } %>
-            <% } %>
+            <% if (session.User.admin) { %>
+            <li><a href="/user">用户管理</a></li>
+            <% }} %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">字典管理 <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/clienttype/">客户类型</a></li>
+                <li><a href="/domain/">行业领域</a></li>
+                <li><a href="/loanform/">贷款方式</a></li>
+                <li><a href="/mortgatetype/">抵押类型</a></li>
+                <li><a href="/shareholderform/">股东出资方式</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Placeholder</a></li>
+              </ul>
+            </li>
           </ul>
           <div class="navbar-right">
             <% if (session.authenticated) { %>
@@ -68,7 +82,27 @@
         </div>
       </div>
     </nav>
+    <% if (typeof curr_action !== "undefined" && typeof model !== "undefined" && typeof title !== "undefined") { %>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="haha-sidebar hidden-print affix-top" role="complementary" style="">
+            <ul class="nav haha-sidenav">
+              <% var active_new = (curr_action == "new" ? "active" : ""); %>
+              <% var active_index = (curr_action == "index" ? "active" : ""); %>
+              <li class="<%= active_index %>"><a href="/<%= model %>/">所有<%= title %></a></li>
+              <li class="<%= active_new %>"><a href="/<%= model %>/new">新建<%= title %></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <%- body %>
+        </div>
+      </div>
+    </div>
+    <% } else { %>
     <%- body %>
+    <% } %>
     <div class='container'>
       <hr/>
       <footer class='footer'>
@@ -136,6 +170,9 @@
     <script src="/linker/js/jquery.js"></script>
     <script src="/linker/js/jquery.validate.min.js"></script>
     <script src="/linker/js/bootstrap.js"></script>
+    <script src="/linker/js/bootstrap-select.js"></script>
+    <script src="/linker/js/bootstrap-datetimepicker.js"></script>
+    <script src="/linker/js/common.js"></script>
     <script src="/linker/js/custom.validate.js"></script>
     <script src="/linker/js/underscore.js"></script>
     <script src="/linker/js/user.show.js"></script>

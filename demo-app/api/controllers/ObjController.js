@@ -1,5 +1,5 @@
 /**
- * LoanFormController
+ * ObjectController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -17,18 +17,10 @@
 
 module.exports = {
     
-
-  new: function(req, res) {
-    var display_name = {
-      'name' : '贷款方式'
-    };
-    res.view({ display_name: display_name });
+  'new': function(req, res) {
+    res.view(req.session.generic_data);
   },
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to LoanFormController)
-   */
+  
   _config: {}
 
   

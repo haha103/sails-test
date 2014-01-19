@@ -16,6 +16,7 @@ module.exports = {
     start  : { type : 'date'    , required : true } ,
     end    : { type : 'date'    , required : true } ,
     // fk
+    loanee : { type : 'integer'  , required : true } ,
     loaner : { type : 'integer'  , required : true } ,
     form   : { type : 'integer'  , required : true } ,
     

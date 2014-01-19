@@ -17,7 +17,12 @@
 
 module.exports = {
     
-  
+  'new': function(req, res) {
+    var display_name = {
+      "name": "行业领域"
+    }
+    res.view({ display_name: display_name });
+  }, 
 
 
   /**

@@ -17,14 +17,16 @@
 
 module.exports = {
     
-  
+  'new': function(req, res) {
+    var display_name = {
+      "name"      : "名称"   ,
+      "type"      : "类型"   ,
+      "mortgagor" : "抵押人" ,
+      "value"     : "净值"
+    }
+    res.view({ display_name: display_name });
+  },
 
-
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to MortgageController)
-   */
   _config: {}
 
-  
 };

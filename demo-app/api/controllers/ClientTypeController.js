@@ -1,5 +1,5 @@
 /**
- * LoanFormController
+ * ClientTypeController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -17,17 +17,18 @@
 
 module.exports = {
     
-
+  
   new: function(req, res) {
     var display_name = {
-      'name' : '贷款方式'
+      'name': '客户类型'
     };
-    res.view({ display_name: display_name });
+    res.view({display_name: display_name});
   },
+
 
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to LoanFormController)
+   * (specific to ClientTypeController)
    */
   _config: {}
 

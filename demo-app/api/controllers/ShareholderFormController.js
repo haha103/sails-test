@@ -18,6 +18,12 @@
 module.exports = {
     
   
+  new: function(req, res) {
+    var display_name = {
+      'name' : '出资方式'
+    };
+    res.view({ display_name : display_name });
+  },
 
 
   /**
