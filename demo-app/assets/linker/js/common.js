@@ -45,7 +45,8 @@ function handle_shareholder_modal() {
       alert("不能留空!");
       return;
     }
-    var new_sh_row = "<tr><td>" + name + "</td><td>" + amount + "</td><td>" + form_name + "</td><td>" + share + "</tr>";
+    //var new_sh_row = "<tr><td>" + name + "</td><td>" + amount + "</td><td>" + form_name + "</td><td>" + share + "</td></tr>";
+    var new_sh_row = JST['assets/linker/templates/add_row.ejs']({ vals: [ name, amount, form_name, share ]});
     var new_sh_row_obj = $(new_sh_row).appendTo("table#shareholders tbody");
     shareholder_count++;
     $('<input>').attr({ type: 'hidden', name: 'shareholder_name_' + shareholder_count, value: name }).appendTo("form");
