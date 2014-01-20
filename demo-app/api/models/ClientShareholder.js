@@ -11,9 +11,9 @@ module.exports = {
   schema     : true,
   attributes : {
 
-    first_name : { type : 'string' , required : true } ,
-    last_name  : { type : 'string' , required : true } ,
-    share      : { type : 'float'  , required : true } ,
+    name   : { type : 'string' , required : true } ,
+    share  : { type : 'float'  , required : true } ,
+    amount : { type : 'float'  , required : true } ,
     // fk
     form    : { type : 'integer' , required : true },
     company : { type : 'integer' , required : true } // id of Client model
