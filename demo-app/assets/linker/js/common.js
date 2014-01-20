@@ -29,6 +29,7 @@ $(document).ready(function(){
   switch(page) {
     case '/client/new':
       handle_shareholder_modal();
+      handle_loan_modal();
       break;
   }
 });
@@ -55,5 +56,32 @@ function handle_shareholder_modal() {
     $('<input>').attr({ type: 'hidden', name: 'shareholder_form_' + shareholder_count, value: form_id }).appendTo("form");
     $("#new-shareholder-modal .modal-body input").val('');
     $("#new-shareholder-modal").modal("hide");
+  });
+}
+
+function handle_loan_modal() {
+  var loan_count = 0;
+  $("button#loan-modal-save").on("click", function(e) {
+    var amount = $("#new-loan-modal .modal-body input#amount").val();
+    var start = $("#new-loan-modal .modal-body input#start").val();
+    var end = $("#new-loan-modal .modal-body input#end").val();
+    var loaner_id = $("#new-loan-modal .modal-body select#loaner option:selected").val(); 
+    var loaner_name = $("#new-loan-modal .modal-body select#loaner option:selected").text(); 
+    var form_id = $("#new-loan-modal .modal-body select#form option:selected").val(); 
+    var form_name = $("#new-loan-modal .modal-body select#form option:selected").text(); 
+    if (amount == "" || start == "" || end == "") {
+      alert("不能留空!");
+      return;
+    }
+    var new_sh_row = JST['assets/linker/templates/add_row.ejs']({ vals: [ loaner_name, amount, start, end, form_name ]});
+    var new_sh_row_obj = $(new_sh_row).appendTo("table#loans tbody");
+    loan_count++;
+    $('<input>').attr({ type: 'hidden', name: 'loan_amount_' + loan_count, value: amount }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'loan_start_' + loan_count, value: start }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'loan_end_' + loan_count, value: end }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'loan_form_' + loan_count, value: form_id }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'loan_loaner_' + loan_count, value: loaner_id }).appendTo("form");
+    $("#new-loan-modal .modal-body input").val('');
+    $("#new-loan-modal").modal("hide");
   });
 }
