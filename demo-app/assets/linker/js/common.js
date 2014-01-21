@@ -30,6 +30,7 @@ $(document).ready(function(){
     case '/client/new':
       handle_shareholder_modal();
       handle_loan_modal();
+      handle_bonding_modal();
       break;
   }
 });
@@ -83,5 +84,34 @@ function handle_loan_modal() {
     $('<input>').attr({ type: 'hidden', name: 'loan_loaner_' + loan_count, value: loaner_id }).appendTo("form");
     $("#new-loan-modal .modal-body input").val('');
     $("#new-loan-modal").modal("hide");
+  });
+}
+
+function handle_bonding_modal() {
+  var bonding_count = 0;
+  $("button#bonding-modal-save").on("click", function(e) {
+    var warrantee_type_id = $("#new-bonding-modal .modal-body select#warrantee_type option:selected").val(); 
+    var warrantee_type_name = $("#new-bonding-modal .modal-body select#warrantee_type option:selected").text(); 
+    var warrantee = $("#new-bonding-modal .modal-body input#warrantee").val();
+    var loaner_id = $("#new-bonding-modal .modal-body select#loaner option:selected").val(); 
+    var loaner_name = $("#new-bonding-modal .modal-body select#loaner option:selected").text(); 
+    var amount = $("#new-bonding-modal .modal-body input#amount").val();
+    var start = $("#new-bonding-modal .modal-body input#start").val();
+    var end = $("#new-bonding-modal .modal-body input#end").val();
+    if (warrantee == "" || amount == "" || start == "" || end == "") {
+      alert("不能留空!");
+      return;
+    }
+    var new_row = JST['assets/linker/templates/add_row.ejs']({ vals: [ warrantee_type_name, warrantee, loaner_name, amount, start, end ]});
+    var new_row_obj = $(new_row).appendTo("table#bondings tbody");
+    bonding_count++;
+    $('<input>').attr({ type: 'hidden', name: 'bonding_warrantee_type_' + bonding_count, value: warrantee_type_id }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'bonding_warrantee_' + bonding_count, value: warrantee }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'bonding_loaner_' + bonding_count, value: loaner_id }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'bonding_amount_' + bonding_count, value: amount }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'bonding_start_' + bonding_count, value: start }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'bonding_end_' + bonding_count, value: end }).appendTo("form");
+    $("#new-bonding-modal .modal-body input").val('');
+    $("#new-bonding-modal").modal("hide");
   });
 }

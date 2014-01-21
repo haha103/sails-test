@@ -16,7 +16,7 @@ module.exports = {
     amount    : { type : 'integer' , required : true } ,
     // fk
     loaner         : { type : 'integer' , required : true } , // Loaner model
-    warrantor      : { type : 'integer' , required : true } , // ClientType model
+    warrantor      : { type : 'integer' , required : true } , // Client model
     warrantee_type : { type : 'integer' , required : true } , // ClientType model
 
   }

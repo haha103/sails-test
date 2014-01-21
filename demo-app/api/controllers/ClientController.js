@@ -42,6 +42,11 @@ module.exports = {
     });
   },
 
+  create: function(req, res) {
+    console.log(req.params.all());
+    res.json(req.params.all());
+  },
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to ClientController)
