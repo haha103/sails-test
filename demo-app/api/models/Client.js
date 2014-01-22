@@ -16,30 +16,29 @@ module.exports = {
     pid : { type : 'string' , required : true , unique : true } ,
 
     type    : { type : 'integer' , required : true } , // ClientType model
-    name    : { type : 'string'  , require  : true } ,
+    name    : { type : 'string'  , required : true } ,
     phone   : { type : 'string'  , required : true } ,
     address : { type : 'string'  , required : true } ,
-    domains : { type : 'array'   , required : true } , // Domain model
 
-  	email : { type : 'email' } ,
-    loans : { type : 'array' } , // ClientLoan model
+    domains : { type : 'array' } , // Domain model
+  	email   : { type : 'email' } ,
+    loans   : { type : 'array' } , // ClientLoan model
 
     /* individual clients */
-    education     : { type : 'string'  , required : true } ,
-    employer      : { type : 'string'  , required : true } ,
-    title         : { type : 'string'  , required : true } ,
-    yearly_income : { type : 'integer' , required : true } ,
+    education     : { type : 'string'  } ,
+    employer      : { type : 'string'  } ,
+    title         : { type : 'string'  } ,
+    yearly_income : { type : 'integer' } ,
 
     /* company clients */
-    legal_person       : { type : 'string'  , required : true } ,
-    contact            : { type : 'string'  , required : true } ,
-    contact_phone      : { type : 'string'  , required : true } ,
-    founded            : { type : 'date'    , required : true } ,
-    products           : { type : 'array'   , required : true } ,
-    registered_capital : { type : 'integer' , required : true } ,
-    total_asset        : { type : 'integer' , required : true } ,
-    net_asset          : { type : 'integer' , required : true } ,
-
+    legal_person           : { type : 'string'  } ,
+    contact                : { type : 'string'  } ,
+    contact_phone          : { type : 'string'  } ,
+    founded                : { type : 'date'    } ,
+    products               : { type : 'array'   } ,
+    registered_capital     : { type : 'integer' } ,
+    total_asset            : { type : 'integer' } ,
+    net_asset              : { type : 'integer' } ,
     asset_liability_ratio  : { type : 'integer' } ,
     current_ratio          : { type : 'integer' } ,
     quick_ratio            : { type : 'integer' } ,
@@ -48,8 +47,8 @@ module.exports = {
     profit_curr_year       : { type : 'integer' } ,
     profit_last_year       : { type : 'integer' } ,
 
-    shareholders : { type : 'array'    } , // ClientShareholder model
-    bondings     : { type : 'array'    } , // ClientBonding model
+    shareholders : { type : 'array' } , // ClientShareholder model
+    bondings     : { type : 'array' } , // ClientBonding model
 
   }
 

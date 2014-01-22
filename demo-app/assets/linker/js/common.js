@@ -12,11 +12,11 @@ $(document).ready(function(){
     var selected_type = $('option:selected', this);
     var selected_type_name = selected_type.text();
     if (selected_type_name == "个人") {
-      $("div[company]").addClass("hide");
-      $("div[individual]").removeClass("hide");
+      $("[company]").addClass("hide");
+      $("[individual]").removeClass("hide");
     } else { // 企业
-      $("div[individual]").addClass("hide");
-      $("div[company]").removeClass("hide");
+      $("[individual]").addClass("hide");
+      $("[company]").removeClass("hide");
     }
   });
 
