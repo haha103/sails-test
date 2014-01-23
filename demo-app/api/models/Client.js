@@ -35,7 +35,7 @@ module.exports = {
     contact                : { type : 'string'  } ,
     contact_phone          : { type : 'string'  } ,
     founded                : { type : 'date'    } ,
-    products               : { type : 'array'   } ,
+    products               : { type : 'string'  } ,
     registered_capital     : { type : 'integer' } ,
     total_asset            : { type : 'integer' } ,
     net_asset              : { type : 'integer' } ,

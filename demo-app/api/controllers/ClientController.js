@@ -16,6 +16,7 @@
  */
 
 var Helper = require('../libs/Helper');
+var S = require('string');
 
 var display_name = {
   "pid"           : "ID"       , "name"        : "名字"     , "email"                  : "电子邮箱"     ,
@@ -44,19 +45,85 @@ module.exports = {
     });
   },
 
-  create: function(req, res) {
+  create: function(req, res, next) {
     var client = {}; 
+    var shareholders = [];
+    var loans = [];
+    var bondings = [];
     var compacted_params = Helper.compactObj(req.params.all());
     for (var k in compacted_params) {
       var v = compacted_params[k];
       if (k in Client.attributes) {
         client[k] = v;
+      } else if (S(k).startsWith("shareholder_")) {
+        var arr = k.split("_");
+        arr.shift();
+        var index = parseInt(arr.pop()) - 1;
+        var field = arr.join("_");
+        if (typeof shareholders[index] == "undefined") {
+          shareholders[index] = {};
+        }
+        shareholders[index][field] = v;
+      } else if (S(k).startsWith("loan_")) {
+        var arr = k.split("_");
+        arr.shift();
+        var index = parseInt(arr.pop()) - 1;
+        var field = arr.join("_");
+        if (typeof loans[index] == "undefined") {
+          loans[index] = {};
+        }
+        loans[index][field] = v;
+      } else if (S(k).startsWith("bonding_")) {
+        var arr = k.split("_");
+        arr.shift();
+        var index = parseInt(arr.pop()) - 1;
+        var field = arr.join("_");
+        if (typeof bondings[index] == "undefined") {
+          bondings[index] = {};
+        }
+        bondings[index][field] = v;
       } else {
         console.log("'" + k + "' is not a valid field ... skipping ...");
       }
     }
     console.log(client);
-    res.json(client);
+    Client.create(client, function clientCreated(err, client) {
+      if (err) {
+        res.json(err); 
+        return;
+      }
+      for (var i = 0; i < shareholders.length; ++i) {
+        shareholder = shareholders[i];
+        shareholder.company = client.id;
+        ClientShareholder.create(shareholder, function shareholderCreated(err, shareholder) {
+          if (err) return next(err);
+          if (typeof client.shareholders == "undefined") client.shareholders = [];
+          client.shareholders.push(shareholder.id);
+        });
+      }
+      for (var i = 0; i < loans.length; ++i) {
+        loan = loans[i];
+        loan.loanee = client.id;
+        ClientLoan.create(loan, function loanCreated(err, loan) {
+          if (err) return next(err);
+          if (typeof client.loans == "undefined") client.loans = [];
+          client.loans.push(loan.id);
+        });
+      }
+      for (var i = 0; i < bondings.length; ++i) {
+        bonding = bondings[i];
+        bonding.warrantor = client.id;
+        ClientBonding.create(bonding, function bondingCreated(err, bonding) {
+          if (err) return next(err);
+          if (typeof client.bondings == "undefined") client.bondings = [];
+          client.bondings.push(bonding.id);
+        });
+      }
+      client.save(function(err) {
+        console.log(client);
+        res.json(client);
+      })
+    });
   },
 
   /**
