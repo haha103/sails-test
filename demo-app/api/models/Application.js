@@ -10,15 +10,17 @@ module.exports = {
 
   schema: true,
   attributes: {
-    // fk
-    applicant : { type : 'integer' , required : true } ,
-    type      : { type : 'integer' , required : true } ,
-    form      : { type : 'integer' , required : true } ,
-    purposes  : { type : 'integer' , required : true } ,
-    mortgages : { type : 'integer' , required : true } ,
 
-    amount : { type : 'integer' , required : true } ,
-    length : { type : 'integer' , required : true } ,
+    type            :  { type : 'integer' , required : true } , // ApplicationType
+    applicant       :  { type : 'integer' , required : true } , // Client
+    credit_type     :  { type : 'integer' , required : true } , // CreditType
+    credit_purposes :  { type : 'integer' , required : true } , // CreditPurpose
+
+    mortgages :  { type : 'array' }  , // Mortgage
+    partners  :  { type : 'array' }  , // Partner
+
+    amount :  { type : 'integer' , required : true }  ,
+    due    :  { type : 'date'    , required : true }  ,
 
   }
 

@@ -1,0 +1,98 @@
+<div class='haha-maincontent'>
+  <form role='form' action="/application/create" method="POST" class="haha-form-signup">
+    <h3>新建<%= title %></h3>
+    <hr/>
+    <div class="row">
+      <div class="col-md-4">
+        <div class='form-group'>
+          <select name="type" id="type" class="form-control input-sm">
+            <% ApplicationType.find({}).done(function(err, vals) { %>
+            <%   for (var i = 0; i < vals.length; ++i) { %>
+            <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
+            <%   } %>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+    </div>
+		<div class="panel panel-default">
+			<div class="panel-heading">基本情况</div>
+			<div class="panel-body">
+        <div class="row">
+          <div class="col-md-12">
+            <label class='control-label' for="applicant"><%= display_name["applicant"] %></label>
+            <div class='form-group'>
+              <select name="applicant" id="applicant" class="form-control input-sm">
+                <% Client.find({}).done(function(err, vals) { %>
+                <%   for (var i = 0; i < vals.length; ++i) { %>
+                <%     ClientType.findOne(vals[i].type).done(function(err, ctype) { %>
+                <option value="<%= vals[i].id %>">
+                  <%= ctype.name%> - <%= vals[i].name %>
+                </option>
+                <%     }); %>
+                <%   } %>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class='form-group'>
+              <label class='control-label' for="amount"><%= display_name["amount"] %></label>
+              <input type='text' class='form-control input-sm' name='amount'/>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class='form-group'>
+              <label class='control-label' for="due"><%= display_name["due"] %></label>
+              <input type='text' class='form-control input-sm' name='due' datepicker/>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class='form-group'>
+              <label class='control-label' for="partner"><%= display_name["partner"] %></label>
+              <input type='text' class='form-control input-sm' name='partner'/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class='form-group'>
+              <label class='control-label' for="credit_type"><%= display_name["credit_type"] %></label>
+              <select name="credit_type" class="form-control input-sm" multiple>
+                <% CreditType.find({}).done(function(err, vals) { %>
+                <%   for (var i = 0; i < vals.length; ++i) { %>
+                <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
+                <%   } %>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class='form-group'>
+              <label class='control-label' for="credit_purpose"><%= display_name["credit_purpose"] %></label>
+              <select name="credit_purpose" class="form-control input-sm" multiple>
+                <% CreditPurpose.find({}).done(function(err, vals) { %>
+                <%   for (var i = 0; i < vals.length; ++i) { %>
+                <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
+                <%   } %>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+        </div>
+			</div>
+		</div>
+
+    <%- partial('partials/mortgages') %>
+
+    <hr/>
+    <div class="row">
+      <div class="col-md-2">
+        <button type='submit' class='btn btn-primary btn-block'>创建</button>
+      </div>
+    </div>
+    <input class='hidden' name='_csrf' value='<%= _csrf %>' />
+	</form>
+</div>

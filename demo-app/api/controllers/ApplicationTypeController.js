@@ -17,9 +17,13 @@
 
 module.exports = {
     
-  
-
-
+  'new': function(req, res) {
+    var display_name = {
+      "name": '申请类型'
+    };
+    res.view({ display_name: display_name })
+  },
+ 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to ApplicationTypeController)

@@ -32,8 +32,35 @@ $(document).ready(function(){
       handle_loan_modal();
       handle_bonding_modal();
       break;
+    case '/application/new':
+      handle_mortgage_model();
+      break
   }
 });
+
+function handle_mortgage_model() {
+  var count = 0;
+  $("button#mortgage-modal-save").on("click", function(e) {
+    var name = $("#new-mortgage-modal .modal-body input#name").val();
+    var value = $("#new-mortgage-modal .modal-body input#value").val();
+    var type_id = $("#new-mortgage-modal .modal-body select#type option:selected").val(); 
+    var type_name = $("#new-mortgage-modal .modal-body select#type option:selected").text(); 
+    if (name == "" || value == "") {
+      alert("不能留空!");
+      return;
+    }
+    //var new_sh_row = "<tr><td>" + name + "</td><td>" + amount + "</td><td>" + form_name + "</td><td>" + share + "</td></tr>";
+    var new_row = JST['assets/linker/templates/add_row.ejs']({ vals: [ type_name, name, value ]});
+    var new_row_obj = $(new_row).appendTo("table#mortgages tbody");
+    count++;
+    $('<input>').attr({ type: 'hidden', name: 'mortgage_name_' + count, value: name }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'mortgage_value_' + count, value: value }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'mortgage_type_' + count, value: type_id }).appendTo("form");
+    $("#new-mortgage-modal .modal-body input").val('');
+    $("#new-mortgage-modal").modal("hide");
+  });
+ 
+}
 
 function handle_shareholder_modal() {
   var shareholder_count = 0;
