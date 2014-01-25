@@ -1,5 +1,5 @@
 /**
- * ApplicationController
+ * PartnerController
  *
  * @module      :: Controller
  * @description	:: A set of functions called `actions`.
@@ -15,37 +15,20 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var display_name = {
-  
-  "type"           : "申请类型"     ,
-  "applicant"      : "申请者"       ,
-  "credit_type"    : "授信类型"     ,
-  "credit_purpose" : "授信用途"     ,
-  "mortgages"      : "抵押物"       ,
-  "amount"         : "申请金额"     ,
-  "partner"        : "合作机构"     ,
-  "due"            : "还款日期"     ,
-  "payment_source" : "还款资金来源"
-
-};
-
 module.exports = {
     
-   new: function(req, res) {
-    var curr_action = "new";
-    var model = "application";
-    var title = "申请";
-    res.view({ 
-      display_name : display_name ,
-      curr_action  : curr_action  ,
-      model        : model        ,
-      title        : title
-    });
+  'new': function(req, res) {
+    var display_name = {
+      "name": '合作机构'
+    };
+    res.view({ display_name: display_name })
   },
  
+
+
   /**
    * Overrides for the settings in `config/controllers.js`
-   * (specific to ApplicationController)
+   * (specific to PartnerController)
    */
   _config: {}
 

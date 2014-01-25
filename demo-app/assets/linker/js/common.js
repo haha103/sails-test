@@ -34,9 +34,41 @@ $(document).ready(function(){
       break;
     case '/application/new':
       handle_mortgage_model();
+      handle_guarantor_model();
       break
   }
 });
+
+function handle_guarantor_model() {
+  var count = 0;
+  $("button#guarantor-modal-save").on("click", function(e) {
+    var name = $("#new-guarantor-modal .modal-body input#name").val();
+    var legal_person = $("#new-guarantor-modal .modal-body input#legal_person").val();
+    var registered_capital = $("#new-guarantor-modal .modal-body input#registered_capital").val();
+    var total_asset = $("#new-guarantor-modal .modal-body input#total_asset").val();
+    var net_asset = $("#new-guarantor-modal .modal-body input#net_asset").val();
+    var bonding_amount = $("#new-guarantor-modal .modal-body input#bonding_amount").val();
+    if (name == "" || legal_person == "") {
+      alert("不能留空!");
+      return;
+    }
+    var new_row = JST['assets/linker/templates/add_row.ejs']({ 
+      vals: [ name, legal_person, registered_capital, total_asset, net_asset, bonding_amount ]
+    });
+    var new_row_obj = $(new_row).appendTo("table#guarantors tbody");
+    count++;
+    $('<input>').attr({ type: 'hidden', name: 'guarantor_name_' + count, value: name }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', legal_person: 'guarantor_legal_person_' + count, value: legal_person }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', registered_capital: 'guarantor_registered_capital_' + count, value: registered_capital }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', total_asset: 'guarantor_total_asset_' + count, value: total_asset }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', net_asset: 'guarantor_net_asset_' + count, value: net_asset }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', bonding_amount: 'guarantor_bonding_amount_' + count, value: bonding_amount }).appendTo("form");
+    $("#new-guarantor-modal .modal-body input").val('');
+    $("#new-guarantor-modal").modal("hide");
+  });
+ 
+}
+
 
 function handle_mortgage_model() {
   var count = 0;

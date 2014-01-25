@@ -19,7 +19,7 @@
 			<div class="panel-heading">基本情况</div>
 			<div class="panel-body">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <label class='control-label' for="applicant"><%= display_name["applicant"] %></label>
             <div class='form-group'>
               <select name="applicant" id="applicant" class="form-control input-sm">
@@ -30,6 +30,19 @@
                   <%= ctype.name%> - <%= vals[i].name %>
                 </option>
                 <%     }); %>
+                <%   } %>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class='form-group'>
+              <label class='control-label' for="partner"><%= display_name["partner"] %></label>
+              <select name="partner" id="partner" class="form-control input-sm">
+                <option value="-1">&nbsp;</option>
+                <% Partner.find({}).done(function(err, vals) { %>
+                <%   for (var i = 0; i < vals.length; ++i) { %>
+                <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
                 <%   } %>
                 <% }) %>
               </select>
@@ -51,8 +64,8 @@
           </div>
           <div class="col-md-4">
             <div class='form-group'>
-              <label class='control-label' for="partner"><%= display_name["partner"] %></label>
-              <input type='text' class='form-control input-sm' name='partner'/>
+              <label class='control-label' for="payment_source"><%= display_name["payment_source"] %></label>
+              <input type='text' class='form-control input-sm' name='payment_source'/>
             </div>
           </div>
         </div>
@@ -86,6 +99,7 @@
 		</div>
 
     <%- partial('partials/mortgages') %>
+    <%- partial('partials/guarantors') %>
 
     <hr/>
     <div class="row">

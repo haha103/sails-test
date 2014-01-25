@@ -19,8 +19,9 @@ module.exports = {
     mortgages :  { type : 'array' }  , // Mortgage
     partners  :  { type : 'array' }  , // Partner
 
-    amount :  { type : 'integer' , required : true }  ,
-    due    :  { type : 'date'    , required : true }  ,
+    amount         :  { type : 'integer' , required : true }  ,
+    due            :  { type : 'date'    , required : true }  ,
+    payment_source :  { type : 'string'  , required : true }  ,
 
   }
 
