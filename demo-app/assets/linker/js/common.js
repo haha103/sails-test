@@ -42,12 +42,12 @@ $(document).ready(function(){
 function handle_guarantor_model() {
   var count = 0;
   $("button#guarantor-modal-save").on("click", function(e) {
-    var name = $("#new-guarantor-modal .modal-body input#name").val();
-    var legal_person = $("#new-guarantor-modal .modal-body input#legal_person").val();
-    var registered_capital = $("#new-guarantor-modal .modal-body input#registered_capital").val();
-    var total_asset = $("#new-guarantor-modal .modal-body input#total_asset").val();
-    var net_asset = $("#new-guarantor-modal .modal-body input#net_asset").val();
-    var bonding_amount = $("#new-guarantor-modal .modal-body input#bonding_amount").val();
+    var name = $("#new-guarantor-modal .modal-body input#guarantor-name").val();
+    var legal_person = $("#new-guarantor-modal .modal-body input#guarantor-legal_person").val();
+    var registered_capital = $("#new-guarantor-modal .modal-body input#guarantor-registered_capital").val();
+    var total_asset = $("#new-guarantor-modal .modal-body input#guarantor-total_asset").val();
+    var net_asset = $("#new-guarantor-modal .modal-body input#guarantor-net_asset").val();
+    var bonding_amount = $("#new-guarantor-modal .modal-body input#guarantor-bonding_amount").val();
     if (name == "" || legal_person == "") {
       alert("不能留空!");
       return;
@@ -58,11 +58,11 @@ function handle_guarantor_model() {
     var new_row_obj = $(new_row).appendTo("table#guarantors tbody");
     count++;
     $('<input>').attr({ type: 'hidden', name: 'guarantor_name_' + count, value: name }).appendTo("form");
-    $('<input>').attr({ type: 'hidden', legal_person: 'guarantor_legal_person_' + count, value: legal_person }).appendTo("form");
-    $('<input>').attr({ type: 'hidden', registered_capital: 'guarantor_registered_capital_' + count, value: registered_capital }).appendTo("form");
-    $('<input>').attr({ type: 'hidden', total_asset: 'guarantor_total_asset_' + count, value: total_asset }).appendTo("form");
-    $('<input>').attr({ type: 'hidden', net_asset: 'guarantor_net_asset_' + count, value: net_asset }).appendTo("form");
-    $('<input>').attr({ type: 'hidden', bonding_amount: 'guarantor_bonding_amount_' + count, value: bonding_amount }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'guarantor_legal_person_' + count, value: legal_person }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'guarantor_registered_capital_' + count, value: registered_capital }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'guarantor_total_asset_' + count, value: total_asset }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'guarantor_net_asset_' + count, value: net_asset }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'guarantor_bonding_amount_' + count, value: bonding_amount }).appendTo("form");
     $("#new-guarantor-modal .modal-body input").val('');
     $("#new-guarantor-modal").modal("hide");
   });
@@ -73,10 +73,10 @@ function handle_guarantor_model() {
 function handle_mortgage_model() {
   var count = 0;
   $("button#mortgage-modal-save").on("click", function(e) {
-    var name = $("#new-mortgage-modal .modal-body input#name").val();
-    var value = $("#new-mortgage-modal .modal-body input#value").val();
-    var type_id = $("#new-mortgage-modal .modal-body select#type option:selected").val(); 
-    var type_name = $("#new-mortgage-modal .modal-body select#type option:selected").text(); 
+    var name = $("#new-mortgage-modal .modal-body input#mortgage-name").val();
+    var value = $("#new-mortgage-modal .modal-body input#mortgage-value").val();
+    var type_id = $("#new-mortgage-modal .modal-body select#mortgage-type option:selected").val(); 
+    var type_name = $("#new-mortgage-modal .modal-body select#mortgage-type option:selected").text(); 
     if (name == "" || value == "") {
       alert("不能留空!");
       return;

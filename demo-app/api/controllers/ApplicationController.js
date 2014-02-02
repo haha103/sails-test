@@ -14,18 +14,21 @@
  *
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var WorkflowHelper = require('../libs/WorkflowHelper');
+var Helper = require('../libs/Helper');
+var S = require('string');
 
 var display_name = {
   
-  "type"           : "申请类型"     ,
-  "applicant"      : "申请者"       ,
-  "credit_type"    : "授信类型"     ,
-  "credit_purpose" : "授信用途"     ,
-  "mortgages"      : "抵押物"       ,
-  "amount"         : "申请金额"     ,
-  "partner"        : "合作机构"     ,
-  "due"            : "还款日期"     ,
-  "payment_source" : "还款资金来源"
+  "type"            : "申请类型"     ,
+  "applicant"       : "申请者"       ,
+  "credit_types"    : "授信类型"     ,
+  "credit_purposes" : "授信用途"     ,
+  "mortgages"       : "抵押物"       ,
+  "amount"          : "申请金额"     ,
+  "partners"        : "合作机构"     ,
+  "due"             : "还款日期"     ,
+  "payment_source"  : "还款资金来源"
 
 };
 
@@ -41,6 +44,91 @@ module.exports = {
       model        : model        ,
       title        : title
     });
+  },
+
+  create: function(req, res, next) {
+    var app = {};
+    var guarantors = [];
+    var mortgages = [];
+    var compacted_params = Helper.compactObj(req.params.all());
+    for (var k in compacted_params) {
+      var v = compacted_params[k];
+      if (k in Application.attributes) {
+        if (_.contains(["partners", "credit_types", "credit_purposes"], k)) {
+          v = _.flatten([ v ]);
+        }
+        app[k] = v;
+      } else if (S(k).startsWith("mortgage_")) {
+        var arr = k.split("_");
+        arr.shift();
+        var index = parseInt(arr.pop()) - 1;
+        var field = arr.join("_");
+        if (typeof mortgages[index] == "undefined") {
+          mortgages[index] = {};
+        }
+        mortgages[index][field] = v;
+      } else if (S(k).startsWith("guarantor_")) {
+        var arr = k.split("_");
+        arr.shift();
+        var index = parseInt(arr.pop()) - 1;
+        var field = arr.join("_");
+        if (typeof guarantors[index] == "undefined") {
+          guarantors[index] = {};
+        }
+        guarantors[index][field] = v;
+      } else {
+        console.log("'" + k + "' is not a valid field ... skipping ...");
+      }
+    }
+    Workflow.findOne({ id: app.workflow }).done(function(err, workflow) {
+      var init_state = WorkflowHelper.getInitState(workflow);
+      app.state = init_state;
+    });
+
+    //console.log(app);
+    //console.log(guarantors);
+    var errs = [];
+    Application.create(app, function applicationCreated(err, app) {
+      if (err) {
+        errs.push(err);
+        return;
+      }
+      for (var i = 0; i < mortgages.length; ++i) {
+        mortgage = mortgages[i];
+        mortgage.application = app.id;
+        Mortgage.create(mortgage, function mortgageCreated(err, mortgage) {
+          if (err) {
+            errs.push(err);
+            return;
+          }
+          if (typeof app.mortgages == "undefined") app.mortgages = [];
+          app.mortgages.push(mortgage.id);
+        });
+      }
+      for (var i = 0; i < guarantors.length; ++i) {
+        guarantor = guarantors[i];
+        guarantor.application = app.id;
+        Guarantor.create(guarantor, function guarantorCreated(err, guarantor) {
+          if (err) {
+            errs.push(err);
+            return;
+          }
+          if (typeof app.guarantors == "undefined") app.guarantors = [];
+          app.guarantors.push(guarantor.id);
+        });
+      }
+      app.save(function(err) {
+        if (err) {
+          errs.push(err);
+          return;
+        }
+      })
+    });
+    if (errs.length > 0) {
+      res.json(errs);
+    } else {
+      res.redirect("/application");
+    }
   },
  
   /**

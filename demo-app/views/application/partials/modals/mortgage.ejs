@@ -8,9 +8,9 @@
       <div class="modal-body">
         <div class="form-horizontal">
           <div class="form-group">
-            <label for="type" class="col-sm-3 control-label">抵押类型</label>
+            <label for="mortgage-type" class="col-sm-3 control-label">抵押类型</label>
             <div class="col-sm-9">
-              <select name="type" id="type" class="form-control">
+              <select name="mortgage-type" id="mortgage-type" class="form-control">
                 <% MortgageType.find({}).done(function(err, vals) { %>
                 <%   for (var i = 0; i < vals.length; ++i) { %>
                 <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
@@ -20,15 +20,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="name" class="col-sm-3 control-label">抵押物名称</label>
+            <label for="mortgage-name" class="col-sm-3 control-label">抵押物名称</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="name" name="name" />
+              <input type="text" class="form-control" id="mortgage-name" name="mortgage-name" />
             </div>
           </div>
           <div class="form-group">
-            <label for="value" class="col-sm-3 control-label">抵押物净值</label>
+            <label for="mortgage-value" class="col-sm-3 control-label">抵押物净值</label>
             <div class="col-sm-9">
-              <input type="text" class="form-control" id="value" name="value" />
+              <input type="text" class="form-control" id="mortgage-value" name="mortgage-value" />
             </div>
           </div>
         </div>

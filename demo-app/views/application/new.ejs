@@ -14,6 +14,18 @@
           </select>
         </div>
       </div>
+      <div class="col-md-4 col-md-offset-4">
+        <div class='form-group'>
+          <select name="workflow" id="workflow" class="form-control input-sm">
+            <% Workflow.find({}).done(function(err, vals) { %>
+            <%   for (var i = 0; i < vals.length; ++i) { %>
+            <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
+            <%   } %>
+            <% }) %>
+          </select>
+        </div>
+      </div>
+    </div>
     </div>
 		<div class="panel panel-default">
 			<div class="panel-heading">基本情况</div>
@@ -37,9 +49,8 @@
           </div>
           <div class="col-md-6">
             <div class='form-group'>
-              <label class='control-label' for="partner"><%= display_name["partner"] %></label>
-              <select name="partner" id="partner" class="form-control input-sm">
-                <option value="-1">&nbsp;</option>
+              <label class='control-label' for="partners"><%= display_name["partners"] %></label>
+              <select name="partners" id="partners" class="form-control input-sm" multiple>
                 <% Partner.find({}).done(function(err, vals) { %>
                 <%   for (var i = 0; i < vals.length; ++i) { %>
                 <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
@@ -72,8 +83,8 @@
         <div class="row">
           <div class="col-md-6">
             <div class='form-group'>
-              <label class='control-label' for="credit_type"><%= display_name["credit_type"] %></label>
-              <select name="credit_type" class="form-control input-sm" multiple>
+              <label class='control-label' for="credit_types"><%= display_name["credit_types"] %></label>
+              <select name="credit_types" class="form-control input-sm" multiple>
                 <% CreditType.find({}).done(function(err, vals) { %>
                 <%   for (var i = 0; i < vals.length; ++i) { %>
                 <option value="<%= vals[i].id %>"><%= vals[i].name %></option>
@@ -84,8 +95,8 @@
           </div>
           <div class="col-md-6">
             <div class='form-group'>
-              <label class='control-label' for="credit_purpose"><%= display_name["credit_purpose"] %></label>
-              <select name="credit_purpose" class="form-control input-sm" multiple>
+              <label class='control-label' for="credit_purposes"><%= display_name["credit_purposes"] %></label>
+              <select name="credit_purposes" class="form-control input-sm" multiple>
                 <% CreditPurpose.find({}).done(function(err, vals) { %>
                 <%   for (var i = 0; i < vals.length; ++i) { %>
                 <option value="<%= vals[i].id %>"><%= vals[i].name %></option>

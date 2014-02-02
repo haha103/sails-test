@@ -13,8 +13,8 @@ module.exports = {
   attributes: {
 
     // fk
-    type      : { type : 'integer' , required : true } ,
-    mortgagor : { type : 'integer' , required : true } ,
+    type        : { type : 'integer' , required : true } ,
+    application : { type : 'integer' , required : true } ,
 
     name  : { type : 'string'  , required : true } ,
     value : { type : 'integer' , required : true } ,
