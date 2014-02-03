@@ -132,9 +132,15 @@ module.exports = {
   },
 
   index: function(req, res, next) {
+    var curr_action = "index";
+    var model = "application";
+    var title = "申请";
     Application.find({}).done(function foundApplication(err, apps) {
       if (err) return next(err);
       res.view({ 
+        curr_action: curr_action,
+        model: model,
+        title: title,
         apps: apps,
         WorkflowHelper: WorkflowHelper
       });

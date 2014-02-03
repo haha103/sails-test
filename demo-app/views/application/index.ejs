@@ -1,50 +1,57 @@
-<br/>
-<div class='container'>
-	<div class='panel panel-primary'>
-		<div class='panel-heading'>
-			所有申请
-		</div>
-		<div class='panel-body'>
-			<table class='table'>
-				<thead>
-					<tr>
-						<th>编号</th>
-						<th>申请人</th>
-						<th>申请金额</th>
-						<th>还款日期</th>
-						<th>当前状态</th>
-						<th>进度</th>
-						<th>操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% _.each(apps, function(app) { %>
-					<tr data-id='<%= app.id %>' data-model='application'>
-						<td><%= app.id %></td>
-            <td>
-              <% Client.findOne({ id: app.id }).done(function clientFound(err, client) { %>
-              <%   ClientType.findOne(client.type).done(function(err, ctype) { %>
-              <%= ctype.name %> - <%= client.name %>
-              <%   }); %>
-              <% }); %>
-            </td>
-						<td><%= app.amount %></td>
-						<td><%= app.due %></td>
-            <td>
-              <%= WorkflowHelper.getAllStates()[app.state].name %> 
-            </td>
-            <td style="width: 30%;">
-              <% var progress = WorkflowHelper.getProgress(app.workflow, app.state); %>
-              <div class="progress">
-                <div class="progress-bar" role="progressbar" aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= progress %>%;">
-                </div>
-              </div>
-            </td>
-            <td></td>
-          </tr>
+<div class='haha-maincontent'>
+  <h3>所有<%= title %></h3>
+  <hr/>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>更新</th>
+        <th>编号</th>
+        <th>申请人</th>
+        <th>申请金额</th>
+        <th>还款日期</th>
+        <th>当前状态</th>
+        <th>进度</th>
+        <th>下一步</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% _.each(apps, function(app) { %>
+      <tr data-id='<%= app.id %>' data-model='application'>
+        <td>
+          <a href="/application/show/<%= app.id %>" class="btn btn-primary btn-xs" role="button">更新</a>
+        </td>
+        <td><%= app.id %></td>
+        <td>
+          <% Client.findOne({ id: app.id }).done(function clientFound(err, client) { %>
+          <%   ClientType.findOne(client.type).done(function(err, ctype) { %>
+          <%= ctype.name %> - <%= client.name %>
+          <%   }); %>
+          <% }); %>
+        </td>
+        <td><%= app.amount %></td>
+        <td><%= app.due %></td>
+        <td>
+          <%= WorkflowHelper.getAllStates()[app.state].name %> 
+        </td>
+        <td style="width: 20%;">
+          <% var progress = WorkflowHelper.getProgress(app.workflow, app.state); %>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= progress %>%;">
+              <span><%= progress %>%</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <% Workflow.findOne({ id: app.workflow }).done(function foundWorkflow(err, wf) { %>
+          <%   var def = wf.definition; %>
+          <%   var next_states = def[app.state].next_states; %>
+          <%   for (var i = 0; i < next_states.length; ++i) { %>
+          <a href="#" class="btn btn-warning btn-xs" role="button"><%= WorkflowHelper.getAllStates()[next_states[i]].name %></a>
+          <%   } %>
           <% }) %>
-				</tbody>
-			</table>
-		</div>
-	</div>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
 </div>

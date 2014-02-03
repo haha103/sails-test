@@ -43,11 +43,19 @@ body {
 }
 
 .haha-sidebar {
-  padding-top: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .haha-sidebar .nav > .active > a {
   font-weight: bold;
+  color: @blue;
+  border-right: 2px solid @blue;
+}
+
+.haha-sidebar .nav > li > a {
+  color: @lightGray;
+  padding: 4px 20px;
 }
 
 .haha-monospace-control {
@@ -61,3 +69,14 @@ body {
 .haha-pre-xs {
   font-size: 9px;
 }
+
+.progress {
+    position: relative;
+}
+
+.progress span {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: black;
+ }
