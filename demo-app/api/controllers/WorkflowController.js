@@ -24,20 +24,6 @@ var display_name = {
 
 };
 
-var all_states = {
-   
-  'APPLICATION'      : { name : "提交"     } ,
-  'INVESTIGATION'    : { name : "调查"     } ,
-  'RISK_ASSESSMENT'  : { name : "风险评估" } ,
-  'REVIEW'           : { name : "评审会"   } ,
-  'CONTRACTING'      : { name : "签合同"   } ,
-  'PAY'              : { name : "放款"     } ,
-  'MONITORING'       : { name : "监控"     } ,
-  'CONTINGENCY_PROC' : { name : "应急程序" } ,
-  'RISK_CONTROL'     : { name : "风险控制" } ,
-  'CLOSED'           : { name : "项目关闭" }
-
-};
 
 
 module.exports = {

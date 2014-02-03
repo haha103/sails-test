@@ -1,0 +1,50 @@
+<br/>
+<div class='container'>
+	<div class='panel panel-primary'>
+		<div class='panel-heading'>
+			所有申请
+		</div>
+		<div class='panel-body'>
+			<table class='table'>
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>申请人</th>
+						<th>申请金额</th>
+						<th>还款日期</th>
+						<th>当前状态</th>
+						<th>进度</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% _.each(apps, function(app) { %>
+					<tr data-id='<%= app.id %>' data-model='application'>
+						<td><%= app.id %></td>
+            <td>
+              <% Client.findOne({ id: app.id }).done(function clientFound(err, client) { %>
+              <%   ClientType.findOne(client.type).done(function(err, ctype) { %>
+              <%= ctype.name %> - <%= client.name %>
+              <%   }); %>
+              <% }); %>
+            </td>
+						<td><%= app.amount %></td>
+						<td><%= app.due %></td>
+            <td>
+              <%= WorkflowHelper.getAllStates()[app.state].name %> 
+            </td>
+            <td style="width: 30%;">
+              <% var progress = WorkflowHelper.getProgress(app.workflow, app.state); %>
+              <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= progress %>%;">
+                </div>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          <% }) %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

@@ -130,6 +130,16 @@ module.exports = {
       res.redirect("/application");
     }
   },
+
+  index: function(req, res, next) {
+    Application.find({}).done(function foundApplication(err, apps) {
+      if (err) return next(err);
+      res.view({ 
+        apps: apps,
+        WorkflowHelper: WorkflowHelper
+      });
+    });
+  },
  
   /**
    * Overrides for the settings in `config/controllers.js`
