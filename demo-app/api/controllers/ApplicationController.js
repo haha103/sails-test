@@ -146,12 +146,49 @@ module.exports = {
       });
     });
   },
- 
+
+  transition: function(req, res, next) {
+    console.log(req.params.all());
+    Application.findOne({ id: req.param("app") }).done(function (err, app) {
+      if (err) return next(err);
+      app.state = req.param("next_state");
+      app.save(function (err, app) {
+        if (err) return next(err);
+      });
+    });
+    res.redirect("/application");
+  },
+
+  update: function(req, res, next) {
+    console.log(req.params.all());
+    var next_path = "/application";
+    Application.findOne({ id: req.param("id") }).done(function (err, app) {
+      if (err) return next(err);
+      var model = WorkflowHelper.getModel(app.state);
+      next_path = "/" + model;
+      switch(model) {
+        case "application":
+          next_path += "/show";
+          break;
+        case "investigation":
+          Investigation.findOne({ application: app.id }).done(function(err, o) {
+            if (err) return next(err);
+            next_path += (o ? "/show" + "?id=" + o.id + "&" : "/new?");
+          });
+          break;
+        default:
+          break;
+      }
+      next_path += "app=" + app.id;
+    });
+    res.redirect(next_path);
+  },
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to ApplicationController)
    */
   _config: {}
 
-  
+
 };

@@ -18,7 +18,7 @@
       <% _.each(apps, function(app) { %>
       <tr data-id='<%= app.id %>' data-model='application'>
         <td>
-          <a href="/application/show/<%= app.id %>" class="btn btn-primary btn-xs" role="button">更新</a>
+          <a href="/application/update/<%= app.id %>" class="btn btn-primary btn-xs" role="button">更新</a>
         </td>
         <td><%= app.id %></td>
         <td>
@@ -46,7 +46,7 @@
           <%   var def = wf.definition; %>
           <%   var next_states = def[app.state].next_states; %>
           <%   for (var i = 0; i < next_states.length; ++i) { %>
-          <a href="#" class="btn btn-warning btn-xs" role="button"><%= WorkflowHelper.getAllStates()[next_states[i]].name %></a>
+          <a href="/application/transition?app=<%= app.id %>&next_state=<%= next_states[i] %>" class="btn btn-warning btn-xs" role="button"><%= WorkflowHelper.getAllStates()[next_states[i]].name %></a>
           <%   } %>
           <% }) %>
         </td>

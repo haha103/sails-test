@@ -1,3 +1,7 @@
+var Application = require("../models/Application");
+var Investigation = require("../models/Investigation");
+
+
 var workflow_example = {
 
   "APPLICATION"      : { "init_state" : true, "next_states" : [ "INVESTIGATION", "CLOSED" ] },
@@ -15,16 +19,16 @@ var workflow_example = {
 
 var all_states = {
    
-  'APPLICATION'      :  { name : "申请提交" } ,
-  'INVESTIGATION'    :  { name : "现场调查" } ,
-  'RISK_ASSESSMENT'  :  { name : "风险评估" } ,
-  'REVIEW'           :  { name : "评审会"   } ,
-  'CONTRACTING'      :  { name : "签合同"   } ,
-  'PAY'              :  { name : "放款"     } ,
-  'MONITORING'       :  { name : "监控"     } ,
-  'CONTINGENCY_PROC' :  { name : "应急程序" } ,
-  'RISK_CONTROL'     :  { name : "风险控制" } ,
-  'CLOSED'           :  { name : "项目关闭" }
+  'APPLICATION'      :  { name : "申请提交" , model : "application", c: Application }  ,
+  'INVESTIGATION'    :  { name : "现场调查" , model : "investigation", c: Investigation }  ,
+  'RISK_ASSESSMENT'  :  { name : "风险评估" , model : "riskassessment"  }  ,
+  'REVIEW'           :  { name : "评审会"   , model : "review"          }  ,
+  'CONTRACTING'      :  { name : "签合同"   , model : "contracting"     }  ,
+  'PAY'              :  { name : "放款"     , model : "pay"             }  ,
+  'MONITORING'       :  { name : "监控"     , model : "monitoring"      }  ,
+  'CONTINGENCY_PROC' :  { name : "应急程序" , model : "contingencyproc" }  ,
+  'RISK_CONTROL'     :  { name : "风险控制" , model : "riskcontrol"     }  ,
+  'CLOSED'           :  { name : "项目关闭" , model : "closed"          }
 
 };
 
@@ -65,6 +69,12 @@ module.exports = {
   },
   getAllStates: function() {
     return all_states;
+  },
+  getModel: function(state) {
+    return all_states[state].model;
+  },
+  getClass: function(state) {
+    return all_states[state].c;
   }
 };
 
