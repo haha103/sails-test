@@ -35,9 +35,38 @@ $(document).ready(function(){
     case '/application/new':
       handle_mortgage_model();
       handle_guarantor_model();
-      break
+      break;
+    case '/investigation/new':
+      handle_bank_account_model();
+      break;
   }
 });
+
+function handle_bank_account_model() {
+  var count = 0;
+  $("button#bank_account-modal-save").on("click", function(e) {
+    var bank = $("#new-bank_account-modal .modal-body input#bank_account-bank").val();
+    var account = $("#new-bank_account-modal .modal-body input#bank_account-account").val();
+    var basic_account_val = $("#new-bank_account-modal .modal-body select#bank_account-basic_account option:selected").val(); 
+    var basic_accont_text = $("#new-bank_account-modal .modal-body select#bank_account-basic_account option:selected").text(); 
+    if (bank == "" || account == "") {
+      alert("不能留空!");
+      return;
+    }
+    var new_row = JST['assets/linker/templates/add_row.ejs']({ 
+      vals: [ basic_accont_text, bank, account ]
+    });
+    var new_row_obj = $(new_row).appendTo("table#bank_accounts tbody");
+    count++;
+    $('<input>').attr({ type: 'hidden', name: 'bank_account_bank_' + count, value: bank }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'bank_account_account_' + count, value: account }).appendTo("form");
+    $('<input>').attr({ type: 'hidden', name: 'bank_account_basic_account_' + count, value: basic_account_val }).appendTo("form");
+    $("#new-bank_account-modal .modal-body input").val('');
+    $("#new-bank_account-modal").modal("hide");
+  });
+ 
+}
+
 
 function handle_guarantor_model() {
   var count = 0;

@@ -23,7 +23,19 @@ var display_name = {
   blacklisted: "进入一下系统黑名单",
   credit_rating: "信用评级",
   avg_score: "综合评分",
-  case_summary: "业务简介"
+  case_summary: "业务简介",
+  bank_card: "货款卡号",
+  actual_owner: "实际控制人",
+  actual_owner_addr: "实际控制人住址",
+  actual_owner_phone: "实际控制人电话",
+  last_year_inspected: "去年是否年检",
+  licence: "执照号",
+  national_tax_id: "国税号",
+  local_tax_id: "地税号",
+  require_certs: "需要特殊资质证书",
+  has_certs: "已取得特殊资质证书",
+  legal_person_addr: "法人代表住址",
+  registration_others: "其他注册情况"
 };
 
 module.exports = {
