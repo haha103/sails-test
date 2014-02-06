@@ -173,7 +173,7 @@ module.exports = {
         case "investigation":
           Investigation.findOne({ application: app.id }).done(function(err, o) {
             if (err) return next(err);
-            next_path += (o ? "/show" + "?id=" + o.id + "&" : "/new?");
+            next_path += (o ? "/show" + "/" + o.id + "?" : "/new?");
           });
           break;
         default:
@@ -181,6 +181,7 @@ module.exports = {
       }
       next_path += "app=" + app.id;
     });
+    console.log(next_path);
     res.redirect(next_path);
   },
 

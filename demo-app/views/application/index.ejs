@@ -4,7 +4,7 @@
   <table class='table'>
     <thead>
       <tr>
-        <th>更新</th>
+        <th>查看/更新</th>
         <th>编号</th>
         <th>申请人</th>
         <th>申请金额</th>
@@ -18,7 +18,7 @@
       <% _.each(apps, function(app) { %>
       <tr data-id='<%= app.id %>' data-model='application'>
         <td>
-          <a href="/application/update/<%= app.id %>" class="btn btn-primary btn-xs" role="button">更新</a>
+          <a href="/application/update/<%= app.id %>" class="btn btn-primary btn-xs" role="button">查看/更新</a>
         </td>
         <td><%= app.id %></td>
         <td>

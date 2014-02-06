@@ -43,26 +43,16 @@ module.exports = {
     
   new: function(req, res, next) {
     var app = req.param("app");
-    var app_info = {};
-    app_info.id                = app;
-    app_info.applicant         = ""; // ClientType + Client
-    app_info.type              = ""; // ApplicationType
-    app_info.amount            = "";
-    app_info.credit_types      = []; // CreditType
-    app_info.credit_purposes   = []; // CreditPurpose
-    app_info.due               = "";
-    app_info.applicant_domains = []; // Domain
-
-    Application.findOne({ id: app }).done(function(err, app) {
-      app_info.applicant         = ClientHelper.getTypeName(app.applicant) + " - " + ClientHelper.getName(app.applicant);
-      app_info.type              = AppHelper.getTypeNameByTypeID(app.type);
-      app_info.amount            = app.amount;
-      app_info.credit_types      = CreditTypeHelper.getNamesByIDs(app.credit_types);
-      app_info.credit_purposes   = CreditPurposeHelper.getNamesByIDs(app.credit_purposes);
-      app_info.due               = app.due;
-      app_info.applicant_domains = ClientHelper.getDomainsByID(app.applicant);
+    if (!app) {
+      res.redirect("/investigation/");
+      return;
+    }
+    Investigation.findOne({ application: app }).done(function(err, val) {
+      if (err) { return next(err); }
+      if (val) { res.redirect("/investigation/"); return; }
     });
-
+    
+    var app_info = _get_app_info(app);
     //console.log(app_info);
 
     var curr_action = "new";
@@ -137,11 +127,67 @@ module.exports = {
     }
   },
 
+  index: function(req, res, next) {
+    res.redirect("/application/");
+  },
+
+  show: function(req, res, next) {
+    var app_info = _get_app_info(req.param("app"));
+    var investigation_info = _get_investigation_info(req.param("id"));
+    var curr_action = "show";
+    var edit = false;
+    var model = "investigation";
+    var title = "调查报告";
+    //console.log(investigation_info);
+    res.view({ 
+      app_info           : app_info,
+      investigation_info : investigation_info,
+      curr_action        : curr_action,
+      model              : model,
+      title              : title,
+      display_name       : display_name,
+      edit               : edit
+    });
+  },
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to InvestigationController)
    */
   _config: {}
 
-  
+
 };
+
+function _get_app_info(app) {
+  var app_info = {};
+  app_info.id                = app;
+  app_info.applicant         = ""; // ClientType + Client
+  app_info.type              = ""; // ApplicationType
+  app_info.amount            = "";
+  app_info.credit_types      = []; // CreditType
+  app_info.credit_purposes   = []; // CreditPurpose
+  app_info.due               = "";
+  app_info.applicant_domains = []; // Domain
+
+  Application.findOne({ id: app }).done(function(err, app) {
+    if (err) { app_info = null; return; }
+    app_info.applicant         = ClientHelper.getTypeName(app.applicant) + " - " + ClientHelper.getName(app.applicant);
+    app_info.type              = AppHelper.getTypeNameByTypeID(app.type);
+    app_info.amount            = app.amount;
+    app_info.credit_types      = CreditTypeHelper.getNamesByIDs(app.credit_types);
+    app_info.credit_purposes   = CreditPurposeHelper.getNamesByIDs(app.credit_purposes);
+    app_info.due               = app.due;
+    app_info.applicant_domains = ClientHelper.getDomainsByID(app.applicant);
+  });
+  return app_info;
+}
+
+function _get_investigation_info(id) {
+  var investigation_info = null;
+  Investigation.findOne({ id: id }).done(function(err, val) {
+    if (err) { return; }
+    investigation_info = val;
+  });
+  return investigation_info;
+}

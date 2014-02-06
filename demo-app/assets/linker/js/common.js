@@ -26,21 +26,47 @@ $(document).ready(function(){
     autoclose : true
   });
 
-  switch(page) {
-    case '/client/new':
-      handle_shareholder_modal();
-      handle_loan_modal();
-      handle_bonding_modal();
-      break;
-    case '/application/new':
-      handle_mortgage_model();
-      handle_guarantor_model();
-      break;
-    case '/investigation/new':
-      handle_bank_account_model();
-      break;
+  if (page == '/client/new') {
+    handle_shareholder_modal();
+    handle_loan_modal();
+    handle_bonding_modal();
+  } else if (page == '/application/new') {
+    handle_mortgage_model();
+    handle_guarantor_model();
+  } else if (page == '/investigation/new') {
+    handle_bank_account_model();
+  } else if (/^\/investigation\/show/.test(page)) {
+    handle_edit_btn();
+  } else {
+
   }
+
 });
+
+function handle_edit_btn() {
+  $("div#edit-btn-container").on('click', 'a#edit', function() {
+    ["div.form-group input", "div.form-group select", "div.form-group textarea", "button#toggle-disabled"].map(function(elem) {
+      $(elem).removeAttr("disabled");
+    });
+    ["hr", "div"].map(function(elem) {
+      var selector = elem + "#toggle-hidden";
+      $(selector).removeAttr("hidden");
+    });
+    $(this).text("取消修改");
+    $(this).attr('id', "cancel-edit");
+  });
+  $("div#edit-btn-container").on('click', 'a#cancel-edit', function() {
+    ["div.form-group input", "div.form-group select", "div.form-group textarea", "button#toggle-disabled"].map(function(elem) {
+      $(elem).attr("disabled", "");
+    });
+    ["hr", "div"].map(function(elem) {
+      var selector = elem + "#toggle-hidden";
+      $(selector).attr("hidden", "");
+    });
+    $(this).text("修改");
+    $(this).attr('id', "edit");
+  });
+}
 
 function handle_bank_account_model() {
   var count = 0;

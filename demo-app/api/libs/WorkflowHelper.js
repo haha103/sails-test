@@ -19,8 +19,8 @@ var workflow_example = {
 
 var all_states = {
    
-  'APPLICATION'      :  { name : "申请提交" , model : "application", c: Application }  ,
-  'INVESTIGATION'    :  { name : "现场调查" , model : "investigation", c: Investigation }  ,
+  'APPLICATION'      :  { name : "申请提交" , model : "application"     }  ,
+  'INVESTIGATION'    :  { name : "现场调查" , model : "investigation"   }  ,
   'RISK_ASSESSMENT'  :  { name : "风险评估" , model : "riskassessment"  }  ,
   'REVIEW'           :  { name : "评审会"   , model : "review"          }  ,
   'CONTRACTING'      :  { name : "签合同"   , model : "contracting"     }  ,
