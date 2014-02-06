@@ -15,6 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var Helper = require('../libs/Helper');
 var ClientHelper = require("../libs/ClientHelper");
 var AppHelper = require("../libs/ApplicationHelper");
 var CreditTypeHelper = require("../libs/CreditTypeHelper");
@@ -62,7 +63,7 @@ module.exports = {
       app_info.applicant_domains = ClientHelper.getDomainsByID(app.applicant);
     });
 
-    console.log(app_info);
+    //console.log(app_info);
 
     var curr_action = "new";
     var model = "investigation";
@@ -76,6 +77,65 @@ module.exports = {
     });
   },
 
+  create: function(req, res, next) {
+    var bank_accounts = [];
+    var values = Helper.compactObj(req.params.all());
+    var matched = null;
+    var keys = _.keys(values);
+    keys.map(function(k) {
+      if (k in Investigation.attributes) {
+        if (_.contains(["blacklisted"], k)) {
+          values[k] = _.flatten([ values[k] ]);
+        }
+      } else if ((matched = k.match(/^bank_account_(.+)_([0-9]+$)/))) {
+        var index = matched[2] - 1;
+        var field = matched[1];
+        if (typeof bank_accounts[index] == "undefined") {
+          bank_accounts[index] = {};
+        }
+        bank_accounts[index][field] = values[k];
+        matched = null;
+        delete values[k];
+      } else {
+        console.log("'" + k + "' is not a valid field ... skipping ...");
+        delete values[k];
+      }
+    });
+
+    var errs = [];
+    Investigation.create(values, function(err, val) {
+      
+      if (err) { errs.push(err); return; }
+
+      var client = null;
+      Application.findOne({ id: val.application }).done(function(err, app) {
+        client = app.applicant;
+      });
+
+      for (var i = 0; i < bank_accounts.length; ++i) {
+        var bank_account = bank_accounts[i];
+        bank_account.client = client;
+        bank_account.application = val.application;
+        bank_account.investigation = val.id;
+        ClientBankAccount.create(bank_account, function(err, acc) {
+          if (err) { errs.push(err); return; }
+          if (typeof val.bank_accounts == "undefined") { val.bank_accounts = []; }
+          val.bank_accounts.push(acc.id);
+        });
+      }
+
+      val.save(function (err) {
+        if (err) { errs.push(err); return; }
+      });
+
+    });
+
+    if (errs.length > 0) {
+      res.json(errs);
+    } else {
+      res.redirect("/investigation/");
+    }
+  },
 
   /**
    * Overrides for the settings in `config/controllers.js`

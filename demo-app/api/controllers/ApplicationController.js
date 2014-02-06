@@ -122,7 +122,7 @@ module.exports = {
           errs.push(err);
           return;
         }
-      })
+      });
     });
     if (errs.length > 0) {
       res.json(errs);
