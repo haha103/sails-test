@@ -176,6 +176,12 @@ module.exports = {
             next_path += (o ? "/show" + "/" + o.id + "?" : "/new?");
           });
           break;
+        case "riskassessment":
+          RiskAssessment.findOne({ application: app.id }).done(function(err, o) {
+            if (err) return next(err);
+            next_path += (o ? "/show" + "/" + o.id + "?" : "/new?");
+          });
+          break;
         default:
           break;
       }

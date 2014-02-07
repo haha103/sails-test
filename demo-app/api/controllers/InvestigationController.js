@@ -16,10 +16,12 @@
  */
 
 var Helper = require('../libs/Helper');
+/*
 var ClientHelper = require("../libs/ClientHelper");
 var AppHelper = require("../libs/ApplicationHelper");
 var CreditTypeHelper = require("../libs/CreditTypeHelper");
 var CreditPurposeHelper = require("../libs/CreditPurposeHelper");
+*/
 var display_name = {
   blacklisted: "进入一下系统黑名单",
   credit_rating: "信用评级",
@@ -52,7 +54,7 @@ module.exports = {
       if (val) { res.redirect("/investigation/"); return; }
     });
     
-    var app_info = _get_app_info(app);
+    var app_info = Helper.get_app_info(app);
     //console.log(app_info);
 
     var curr_action = "new";
@@ -132,8 +134,8 @@ module.exports = {
   },
 
   show: function(req, res, next) {
-    var app_info = _get_app_info(req.param("app"));
-    var investigation_info = _get_investigation_info(req.param("id"));
+    var app_info = Helper.get_app_info(req.param("app"));
+    var investigation_info = Helper.get_investigation_info(req.param("id"));
     var curr_action = "show";
     var edit = false;
     var model = "investigation";
@@ -159,6 +161,7 @@ module.exports = {
 
 };
 
+/*
 function _get_app_info(app) {
   var app_info = {};
   app_info.id                = app;
@@ -191,3 +194,4 @@ function _get_investigation_info(id) {
   });
   return investigation_info;
 }
+*/

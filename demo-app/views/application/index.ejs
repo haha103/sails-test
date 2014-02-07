@@ -33,7 +33,7 @@
         <td>
           <%= WorkflowHelper.getAllStates()[app.state].name %> 
         </td>
-        <td style="width: 20%;">
+        <td style="width: 15%;">
           <% var progress = WorkflowHelper.getProgress(app.workflow, app.state); %>
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="<%= progress %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= progress %>%;">
