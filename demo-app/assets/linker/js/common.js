@@ -54,6 +54,7 @@ function handle_edit_btn() {
     });
     $(this).text("取消修改");
     $(this).attr('id', "cancel-edit");
+    $('select').selectpicker('refresh');
   });
   $("div#edit-btn-container").on('click', 'a#cancel-edit', function() {
     ["div.form-group input", "div.form-group select", "div.form-group textarea", "button#toggle-disabled"].map(function(elem) {
@@ -65,6 +66,7 @@ function handle_edit_btn() {
     });
     $(this).text("修改");
     $(this).attr('id', "edit");
+    $('select').selectpicker('refresh');
   });
 }
 
