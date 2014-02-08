@@ -1,8 +1,11 @@
 <div class='haha-maincontent'>
-  <form role='form' action="/investigation/create" method="POST" class="haha-form-signup">
+  <form role='form' action="/riskassessment/create" method="POST" class="haha-form-signup">
     <h3>新建<%= title %></h3>
     <hr/>
     <%- partial("partials/application_summary.ejs") %>
+    <%- partial("partials/fact.ejs") %>
+    <%- partial("partials/analysis.ejs") %>
+    <%- partial("partials/overall.ejs") %>
     <hr/>
     <div class="row">
       <div class="col-md-2">

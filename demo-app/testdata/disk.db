@@ -18,9 +18,9 @@
           "2",
           "7"
         ],
-        "state": "INVESTIGATION",
+        "state": "REVIEW",
         "createdAt": "2014-02-02T12:57:10.669Z",
-        "updatedAt": "2014-02-04T02:20:56.587Z",
+        "updatedAt": "2014-02-08T17:38:40.943Z",
         "id": 5,
         "mortgages": [
           5
@@ -392,10 +392,10 @@
         "title": "SW Architect",
         "email": "wliu272@163.com",
         "admin": true,
-        "online": true,
+        "online": false,
         "encryptedPassword": "$2a$10$2AS8B.etJpvQXS.gntfchujtd4vtYa9yGX2ww.h4dz.femCbZ40jO",
         "createdAt": "2014-02-06T12:45:10.915Z",
-        "updatedAt": "2014-02-06T14:26:24.492Z",
+        "updatedAt": "2014-02-08T17:38:12.773Z",
         "id": 1
       }
     ],
@@ -751,6 +751,25 @@
         "createdAt": "2014-02-06T12:06:20.736Z",
         "updatedAt": "2014-02-06T12:06:20.736Z",
         "id": 3
+      }
+    ],
+    "riskassessment": [
+      {
+        "application": 5,
+        "fact_basics": "aaa",
+        "fact_finance": "bbb",
+        "fact_background": "ccc",
+        "fact_misc": "ddd",
+        "analysis_purpose_and_amount": "eee",
+        "analysis_repay_src": "fff",
+        "analysis_risk_items": "ggg",
+        "analysis_guarantee": "hhh",
+        "analysis_risk_control": "iii",
+        "analysis_materials": "jjj",
+        "overall_comment": "ok",
+        "createdAt": "2014-02-08T17:29:15.051Z",
+        "updatedAt": "2014-02-08T17:29:15.051Z",
+        "id": 1
       }
     ]
   },
@@ -1423,6 +1442,23 @@
         "type": "datetime",
         "default": "NOW"
       }
+    },
+    "riskassessment": {
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "defaultsTo": "AUTO_INCREMENT",
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime",
+        "default": "NOW"
+      },
+      "updatedAt": {
+        "type": "datetime",
+        "default": "NOW"
+      }
     }
   },
   "counters": {
@@ -1494,6 +1530,9 @@
     },
     "clientbankaccount": {
       "id": 3
+    },
+    "riskassessment": {
+      "id": 1
     }
   }
 }

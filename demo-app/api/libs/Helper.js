@@ -38,7 +38,6 @@ module.exports = {
     });
     return app_info;
   },
-
   get_investigation_info: function(id) {
     var investigation_info = null;
     Investigation.findOne({ id: id }).done(function(err, val) {
@@ -54,5 +53,13 @@ module.exports = {
       investigation_info = val;
     });
     return investigation_info;
+  },
+  get_riskassessment_info: function(id) {
+    var riskassessment_info = null;
+    RiskAssessment.findOne({ id: id }).done(function(err, val) {
+      if (err) { return; }
+      riskassessment_info = val;
+    });
+    return riskassessment_info;
   },
 };

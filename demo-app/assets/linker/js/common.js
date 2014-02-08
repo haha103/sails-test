@@ -37,6 +37,8 @@ $(document).ready(function(){
     handle_bank_account_model();
   } else if (/^\/investigation\/show/.test(page)) {
     handle_edit_btn();
+  } else if (/^\/riskassessment\/show/.test(page)) {
+    handle_edit_btn();
   } else {
 
   }
