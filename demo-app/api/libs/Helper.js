@@ -62,4 +62,12 @@ module.exports = {
     });
     return riskassessment_info;
   },
+  get_riskassessment_info_by_app: function(app) {
+    var riskassessment_info = null;
+    RiskAssessment.findOne({ application: app }).done(function(err, val) {
+      if (err) { return; }
+      riskassessment_info = val;
+    });
+    return riskassessment_info;
+  },
 };

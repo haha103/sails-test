@@ -20,7 +20,7 @@
         ],
         "state": "REVIEW",
         "createdAt": "2014-02-02T12:57:10.669Z",
-        "updatedAt": "2014-02-08T17:38:40.943Z",
+        "updatedAt": "2014-02-09T00:59:18.832Z",
         "id": 5,
         "mortgages": [
           5
@@ -395,7 +395,7 @@
         "online": false,
         "encryptedPassword": "$2a$10$2AS8B.etJpvQXS.gntfchujtd4vtYa9yGX2ww.h4dz.femCbZ40jO",
         "createdAt": "2014-02-06T12:45:10.915Z",
-        "updatedAt": "2014-02-08T17:38:12.773Z",
+        "updatedAt": "2014-02-09T01:48:14.724Z",
         "id": 1
       }
     ],
@@ -771,7 +771,8 @@
         "updatedAt": "2014-02-08T17:29:15.051Z",
         "id": 1
       }
-    ]
+    ],
+    "review": []
   },
   "schema": {
     "application": {
@@ -1459,6 +1460,62 @@
         "type": "datetime",
         "default": "NOW"
       }
+    },
+    "review": {
+      "application": {
+        "type": "integer"
+      },
+      "topics": {
+        "type": "string"
+      },
+      "date": {
+        "type": "date"
+      },
+      "host": {
+        "type": "string"
+      },
+      "recorder": {
+        "type": "string"
+      },
+      "account_mgr": {
+        "type": "string"
+      },
+      "risk_mgr": {
+        "type": "string"
+      },
+      "attendees": {
+        "type": "string"
+      },
+      "reviewed_amount": {
+        "type": "string"
+      },
+      "reviewed_due": {
+        "type": "string"
+      },
+      "reviewed_interest_rate": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "review_result": {
+        "type": "integer"
+      },
+      "id": {
+        "type": "integer",
+        "autoIncrement": true,
+        "defaultsTo": "AUTO_INCREMENT",
+        "primaryKey": true,
+        "unique": true
+      },
+      "createdAt": {
+        "type": "datetime",
+        "default": "NOW"
+      },
+      "updatedAt": {
+        "type": "datetime",
+        "default": "NOW"
+      }
     }
   },
   "counters": {
@@ -1533,6 +1590,7 @@
     },
     "riskassessment": {
       "id": 1
-    }
+    },
+    "review": {}
   }
 }
