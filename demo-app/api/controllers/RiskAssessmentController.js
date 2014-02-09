@@ -60,7 +60,7 @@ module.exports = {
   }, 
 
   create: function(req, res, next) {
-    console.log(req.params.all());
+    //console.log(req.params.all());
     var errs = [];
     RiskAssessment.create(req.params.all(), function(err, val) {
       if (err) { errs.push(err); return; }

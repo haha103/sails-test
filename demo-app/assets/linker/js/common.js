@@ -35,9 +35,7 @@ $(document).ready(function(){
     handle_guarantor_model();
   } else if (page == '/investigation/new') {
     handle_bank_account_model();
-  } else if (/^\/investigation\/show/.test(page)) {
-    handle_edit_btn();
-  } else if (/^\/riskassessment\/show/.test(page)) {
+  } else if (/^\/(investigation|riskassessment|review)\/show/.test(page)) {
     handle_edit_btn();
   } else {
 

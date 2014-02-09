@@ -70,4 +70,20 @@ module.exports = {
     });
     return riskassessment_info;
   },
+  get_review_info: function(id) {
+    var review_info = null;
+    Review.findOne({ id: id }).done(function(err, val) {
+      if (err) { return; }
+      review_info = val;
+    });
+    return review_info;
+  },
+  get_review_info_by_app: function(app) {
+    var review_info = null;
+    Review.findOne({ application: app }).done(function(err, val) {
+      if (err) { return; }
+      review_info = val;
+    });
+    return review_info;
+  },
 };
